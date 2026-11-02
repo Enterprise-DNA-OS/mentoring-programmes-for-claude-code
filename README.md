@@ -1,115 +1,91 @@
-<h1 align="center">Mentoring Programmes for Claude Code</h1>
+# Mentoring Programmes for Claude Code
 
-<p align="center">
-  <strong>The open-source mentoring programme system that is just a database and Claude Code.</strong>
-</p>
+Find the mentoring pairs that have gone quiet, the goals still owed and the mentors with room for another participant. Keep the programme in a database you own.
 
-<p align="center">
-  Created by <a href="https://www.enterprisedna.co"><strong>Enterprise DNA</strong></a>. Free and open source. Works with Claude Code, Codex, OpenCode or Cursor.
-</p>
+| Do it yourself | We customise it | We run it for you |
+|---|---|---|
+| Free, MIT. Install and run the demo. | Your matching rules, export mapping and programme reports. | Installed and operated through Omni by Enterprise DNA. One setup fee, then a retainer. |
 
-<!-- three-doors -->
-<table align="center">
-  <tr>
-    <td align="center"><strong>Do it yourself</strong><br/>Clone it, run it, own it. Free, MIT.<br/><a href="#quick-start">Quick start</a></td>
-    <td align="center"><strong>We customise it</strong><br/>Your fields, your rules, your Together Mentoring data brought across.<br/><a href="https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=together">Book a call</a></td>
-    <td align="center"><strong>We run it for you</strong><br/>Installed, connected and operated inside Omni. Setup fee, then a retainer.<br/><a href="https://enterprisedna.co/omni/instead-of/together?utm_source=github&utm_medium=readme&utm_campaign=together">How it works</a></td>
-  </tr>
-</table>
+[Get your version built](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=together) · [Instead of Together Mentoring](https://enterprisedna.co/omni/instead-of/together?utm_source=github&utm_medium=readme&utm_campaign=together)
 
-<p align="center">
-  <a href="#what-is-this">What is this</a> &bull;
-  <a href="#why-no-front-end">Why no front end</a> &bull;
-  <a href="#quick-start">Quick start</a> &bull;
-  <a href="#the-commands">Commands</a> &bull;
-  <a href="#instead-of-together">Instead of Together Mentoring</a> &bull;
-  <a href="#want-it-installed-and-run-for-you">Installed for you</a> &bull;
-  <a href="#license">License</a>
-</p>
+## Start with Monday
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Node-20+-339933?style=flat-square" alt="Node 20+" />
-  <img src="https://img.shields.io/badge/PostgreSQL-any-336791?style=flat-square" alt="PostgreSQL" />
-  <img src="https://img.shields.io/badge/PGlite-embedded-3ecf8e?style=flat-square" alt="PGlite" />
-  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="MIT License" />
-</p>
-
----
-
-## What is this
-
-Mentoring Programmes for Claude Code does the job you pay Together Mentoring for, as a Postgres database and a set of agent commands. There is no web front end. You open the folder in [Claude Code](https://claude.com/claude-code) (or Codex, OpenCode, Cursor: see `AGENTS.md`) and ask for what you want in plain language. It runs the right query, and it can answer questions the Together Mentoring dashboard cannot.
-
-<!-- TODO(author): the annual bill. One sentence: what a 10 to 50 person business typically pays Together Mentoring per year, all in, with a source. -->
-
-Want the same thing with a web front end, or built on a different stack? That is a customisation, and it is exactly what Enterprise DNA does: [book a call](https://enterprisedna.co/omni/book/?utm_source=github&utm_medium=readme&utm_campaign=together).
-
-<!-- TODO(author): two or three sentences on what this specific product covers and who it is for. -->
-
-## Why no front end
-
-- The front end was only ever there because the database was hard to talk to. That is no longer true.
-- Your data sits in plain Postgres tables you own. Any tool can read them. No export, no lock-in.
-- No seats, no tiers, no add-ons. Read [docs/why-no-front-end.md](docs/why-no-front-end.md) for the honest trade-offs too.
-
-## Quick start
-
-Sixty seconds, no database install (an embedded Postgres runs inside Node):
+Requires Node 20 or later.
 
 ```bash
-git clone https://github.com/Enterprise-DNA-OS/mentoring-programmes-for-claude-code.git
-cd mentoring-programmes-for-claude-code
 npm install
 npm run demo
+npm run mentoring -- weekly-review
+npm run docs
+npm run view
 ```
 
-Then open the folder in Claude Code and type a slash command. <!-- TODO(author): name the first command to try. -->
+Open the folder in Claude Code, Codex, OpenCode or Cursor. AGENTS.md and CLAUDE.md route every runtime through the same commands. PGlite runs locally; DATABASE_URL selects PostgreSQL. Never seed a working database.
 
-### Use it with your own Postgres or Supabase
+The fictional demo has two active relationships, one quiet pair, one overdue session and one overdue goal. One waiting participant has not confirmed participation. Dates are relative to the day of seeding; repeating the seed preserves existing records.
 
-Copy `.env.example` to `.env`, set `DATABASE_URL`, then `npm run migrate`. Same commands, shared data, no per-seat fee.
+## The programme rituals
 
-## The commands
+/quiet-pairs finds missed check-ins. /unmatched shows the waiting list. /capacity shows workloads across mentors across programmes. /goal-progress tracks development commitments. /weekly-review combines those with record checks. /suggestions compares declared development needs with skills declared by mentors, after confirmation and capacity checks. A human agrees each new match.
 
-<!-- TODO(author): a table of the slash commands in .claude/commands and what each one does. -->
+32 CLI commands and 36 slash-command recipes. Every CLI command accepts --json. Record changes require --actor and support --dry-run. Exact codes, case-insensitive names and partial identifiers work; ambiguous input lists candidates and exits 1.
 
-| Command | What it does |
-|---|---|
-| `/...` | ... |
+A completed session must have a real date, duration and topic. Feedback is optional and never inferred. A completed goal requires evidence. Audit entries preserve operator names and before/after records for updates. Names are operator supplied, not authenticated identities.
 
-## Instead of Together Mentoring
+## Ten questions answered by your own records
 
-<!-- TODO(author): how to bring data across from Together Mentoring; link docs/replace-together.md -->
+1. Which active pairs have gone quiet? Use `quiet-pairs`.
+2. Which overdue goals belong to those relationships? Use `weekly-review`.
+3. Which mentors still have capacity across programmes? Use `capacity`.
+4. Who is waiting to be matched? Use `unmatched`.
+5. Which waiting participants have a declared skill match? Use `suggestions`.
+6. Which recorded sessions passed without completion? Use `attention`.
+7. Which profiles need participation or accuracy review? Use `compliance`.
+8. What evidence completed a development goal? Use `match`.
+9. What was recorded before a participant review changed it? Use `activity`.
+10. Which relationships have a next meeting recorded? Use `match`.
 
-## Architecture
+These are demonstrated questions, not claims that Together cannot answer them.
 
+## Bring your history
+
+```bash
+npm run mentoring -- import together --programme=LEAD --source=demo-account --users=fixtures/users.csv --matches=fixtures/matches.csv --sessions=fixtures/sessions.csv --actor="Programme owner" --dry-run
 ```
-mentoring-programmes-for-claude-code/
-  CLAUDE.md                 how the operator wants this run (routing table + house rules)
-  AGENTS.md                 the same, for Codex / OpenCode / Cursor / Gemini CLI
-  .claude/commands/         the slash commands
-  scripts/                  the CLI the commands drive
-  scripts/lib/db.mjs        one adapter: DATABASE_URL (pg) or embedded PGlite
-  supabase/migrations/      plain SQL schema
-  supabase/seed.sql         demo data
-  docs/                     the thesis and the migration guide
-```
 
-## Built for coding agents
+The fixtures are fictional. Together documents CSV exports but does not publish a fixed column schema. Use --mapping for the headers in your actual export. The importer reads downloaded user, matching and session reports in one transaction, including the documented JSON report wrapper. It preserves original columns, skips identical imports and rejects changed duplicates. Imported profiles remain unconfirmed until reviewed. [Switching guide](docs/replace-together.md).
 
-The database, CLI and command recipes work with Claude Code, Codex, OpenCode or Cursor. Ask your coding agent for a new command and have it implement and test the change against the same records.
+## Documents and views
 
-## Contributing
+Edit brand.json once. npm run docs renders a relationship review for each match and a programme review for each cohort. npm run view renders the week, available capacity and record checks. /draft-agenda and /draft-review write private HTML to drafts/. Nothing is sent.
 
-Issues and pull requests are welcome. Keep the shape: plain SQL, a small CLI, a slash command per recurring job, no front end.
+/compliance checks accuracy-review dates, retention purposes, participation confirmation and local programme rules. [Sourced checks](docs/compliance.md) explain the difference between legal principles and local intervals. This is record support, not a compliance certificate.
 
-## Want it installed and run for you?
+## Your first hour: ten things to ask for
 
-Enterprise DNA installs Mentoring Programmes for Claude Code for your business, migrates your Together Mentoring data, connects it to the rest of your tools, and runs it for you as part of **Omni**, our managed Command Center. One setup fee, then a monthly retainer.
+1. Put our business name on the programme review.
+2. Show the quiet demo pair and their unfinished goals.
+3. Explain which mentors have capacity.
+4. Preview a Together report import.
+5. Map our export's column names.
+6. Register our programme owner and review date.
+7. Record actual participant confirmation.
+8. Draft the next relationship agenda.
+9. Add a report grouped by our programme.
+10. Add a coaching-topic field with a tested migration.
 
-- Book a call: [enterprisedna.co/omni/book](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=together)
-- Read more: [enterprisedna.co/omni/instead-of/together](https://enterprisedna.co/omni/instead-of/together?utm_source=github&utm_medium=readme&utm_campaign=together)
+/customise adds a tested migration and matching commands. /new-view adds a read-only report.
 
-## License
+## Verification and operating limits
 
-MIT. Copyright (c) 2026 Enterprise DNA.
+npm test creates a temporary database, migrates and seeds twice, exercises all 32 commands and checks matching capacity, participant confirmation, duplicate and invalid imports, rollback, dates, goal evidence, audit, export and escaped HTML. CI covers Windows and Linux with Node 20 and 22, plus PostgreSQL 17. The workflow records actual results in GitHub Actions.
+
+This base serves trusted coordinators. Group mentoring, participant portals, calendar booking, automatic messages and vendor matching algorithms are separate implementation work. It does not make hiring or promotion decisions. Read [why no front end](docs/why-no-front-end.md) and [operations](docs/operations.md). Exports and documents contain personal information. JSON exports have no automated restore command.
+
+## Your version
+
+Together's current pricing page asks for a custom quote. [Pricing and selection evidence](docs/research.md) distinguishes third-party estimates from vendor offers.
+
+Enterprise DNA maps your Together reports, builds your fields, rules, shared views and connections, then runs your version through Omni by Enterprise DNA. One setup fee, then a retainer. [Book 30 minutes with Sam](https://enterprisedna.co/omni/book/?offer=replace-software&utm_source=github&utm_medium=readme&utm_campaign=together).
+
+MIT. Not affiliated with Together, Absorb Software or Anthropic. Hosting and agent usage have their own costs.

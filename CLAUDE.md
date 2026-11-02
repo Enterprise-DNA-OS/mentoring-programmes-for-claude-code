@@ -1,43 +1,49 @@
-# Mentoring Programmes for Claude Code: operating instructions
+# Mentoring Programmes for Claude Code
 
-This file is the brain. Claude Code reads it at the start of every session. It says who this is for, how work gets done, and the one right way to do each recurring job.
+For programme coordinators running voluntary workplace mentoring. This database holds declared skills, participant confirmation, matches, sessions, development goals and review evidence. Read current CLI output before answering.
 
-## Who this is for
+## Routing
 
-- **Business:** [YOUR BUSINESS]
-- **Operator:** [YOUR NAME], [your role]
-- **What matters most:** [the one or two outcomes you care about]
+- /programmes: Read the programme register. Read .claude/commands/programmes.md.
+- /people: Read participant profiles. Read .claude/commands/people.md.
+- /enrolments: Read programme enrolments. Read .claude/commands/enrolments.md.
+- /matches: Read mentoring relationships. Read .claude/commands/matches.md.
+- /sessions: Read scheduled and completed sessions. Read .claude/commands/sessions.md.
+- /goals: Read development commitments. Read .claude/commands/goals.md.
+- /capacity: Review mentor capacity. Read .claude/commands/capacity.md.
+- /unmatched: Find mentees without an active match. Read .claude/commands/unmatched.md.
+- /suggestions: Review skill-based match suggestions. Read .claude/commands/suggestions.md.
+- /quiet-pairs: Find relationships needing a check-in. Read .claude/commands/quiet-pairs.md.
+- /attention: Find overdue mentoring work. Read .claude/commands/attention.md.
+- /goal-progress: Review development progress. Read .claude/commands/goal-progress.md.
+- /compliance: Review privacy and programme record checks. Read .claude/commands/compliance.md.
+- /weekly-review: Prepare the Monday programme review. Read .claude/commands/weekly-review.md.
+- /person: Read one participant and their relationships. Read .claude/commands/person.md.
+- /match: Read one relationship and its history. Read .claude/commands/match.md.
+- /activity: Read the operator change history. Read .claude/commands/activity.md.
+- /export: Export the owned records. Read .claude/commands/export.md.
+- /draft-agenda: Draft a mentoring session agenda. Read .claude/commands/draft-agenda.md.
+- /draft-review: Draft a relationship review. Read .claude/commands/draft-review.md.
+- /add-programme: Register a mentoring programme. Read .claude/commands/add-programme.md.
+- /add-person: Register a participant. Read .claude/commands/add-person.md.
+- /enrol: Record programme participation. Read .claude/commands/enrol.md.
+- /pair: Record an agreed mentoring match. Read .claude/commands/pair.md.
+- /end-pair: End a mentoring relationship. Read .claude/commands/end-pair.md.
+- /log-session: Record or update a session. Read .claude/commands/log-session.md.
+- /add-goal: Record a development commitment. Read .claude/commands/add-goal.md.
+- /complete-goal: Record completion evidence. Read .claude/commands/complete-goal.md.
+- /review-person: Record the completed participant review. Read .claude/commands/review-person.md.
+- /review-programme: Record the completed programme review. Read .claude/commands/review-programme.md.
+- /import: Import Together report exports. Read .claude/commands/import.md.
+- /help: Read the CLI command list. Read .claude/commands/help.md.
+- /customise: add a tested migration and adjust the commands.
+- /new-view: add a read-only report.
+- /docs and /view: render private branded documents.
 
-Fill this in once. A worker with context knows. A worker without it guesses.
+## Rules
 
-## How to work
+All commands support --json. Mutations require --actor and accept --dry-run. Resolve ambiguous names before changing records. Actual participant agreement is required for a new match. Suggestions use declared skills only and do not make employment decisions. Never invent attendance, ratings or development evidence.
 
-1. **Take a brief, not a script.** The operator describes the outcome. You run the right command and present the answer.
-2. **Read before you write.** Before drafting anything about a record, read its full history first.
-3. **Plain language.** Short sentences. No filler. Numbers in tables.
-4. **Silent success, loud problems.** No play-by-play. Say what broke and what you did about it.
-5. **Stop at the line.** Anything that sends, deletes, or faces a customer waits for a yes in this session.
+Never send, publish or delete without explicit operator instructions. No sending or automatic matching is implemented. Drafts, exports and import files stay private. Never seed production. Shared demos require --demo-database; tests require an empty disposable TEST_DATABASE_URL.
 
-## Routing table: one right way for each recurring job
-
-| When the operator asks for... | Use this |
-|---|---|
-| <!-- TODO(author): one row per slash command --> | `/...` |
-
-If an ask fits nothing here, run the CLI directly (`npm run <cli> -- --help`) and then propose a new command for it.
-
-## Hard rules
-
-- Never send email or messages from here. Draft to `drafts/`, a person sends.
-- Never delete records without an explicit yes in this session. Prefer marking closed or archived.
-- Never invent a record. If a name is ambiguous, list the candidates and ask.
-- The database is the source of truth. If the answer is not in it, say so.
-
-## Where things live
-
-- `scripts/` the CLI. `scripts/lib/db.mjs` picks `DATABASE_URL` (Postgres, Supabase) or the embedded database in `.data/`.
-- `supabase/migrations/` the schema, plain SQL. `npm run migrate` applies it.
-- `.claude/commands/` the slash commands. Add one every time the same ask comes twice.
-- `docs/` the thesis and the guide for moving off Together Mentoring.
-
-Built by Enterprise DNA. Installed and run for you as part of Omni: https://enterprisedna.co/omni/instead-of/together
+Read docs/compliance.md before interpreting checks and docs/operations.md before shared use. Keep changes on main and run npm test after functional changes. Claude Code, Codex, OpenCode and Cursor use this same command library.

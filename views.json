@@ -1,13 +1,35 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Mentoring Programmes for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Mentoring week",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Pairs needing contact",
+        "sql": "select code,mentor,mentee,quiet_days,health from pair_health where status='active' and health<>'on cadence' order by code"
+      },
+      {
+        "title": "Goals due",
+        "sql": "select code,match,title,owner,due,state from goal_progress where status='open' order by due"
+      }
+    ]
+  },
+  {
+    "name": "capacity",
+    "title": "Mentor capacity",
+    "sections": [
+      {
+        "title": "Active workload",
+        "sql": "select code,name,capacity,active_matches,available from mentor_capacity order by code"
+      }
+    ]
+  },
+  {
+    "name": "records",
+    "title": "Record reviews",
+    "sections": [
+      {
+        "title": "Review findings",
+        "sql": "select * from compliance_checks order by code,rule"
       }
     ]
   }

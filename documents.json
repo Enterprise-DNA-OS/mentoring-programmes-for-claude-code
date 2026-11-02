@@ -1,11 +1,44 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "relationship-review",
+    "title": "Mentoring relationship review",
+    "for_each": "select id,code from matches order by code",
+    "file": "code",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Relationship",
+        "layout": "record",
+        "sql": "select code,programme,mentor,mentee,status,last_completed,next_session,health from pair_health where id=$1"
+      },
+      {
+        "title": "Goals and evidence",
+        "sql": "select code,title,owner,due,status,evidence from goals where match_id=$1 order by due"
+      },
+      {
+        "title": "Sessions",
+        "sql": "select held_on,status,topic,feedback from sessions where match_id=$1 order by held_on"
+      }
+    ]
+  },
+  {
+    "name": "programme-review",
+    "title": "Mentoring programme review",
+    "for_each": "select id,code from programmes order by code",
+    "file": "code",
+    "sections": [
+      {
+        "title": "Purpose and owner",
+        "layout": "record",
+        "sql": "select code,name,owner,purpose,review_due from programmes where id=$1"
+      },
+      {
+        "title": "Pair health",
+        "sql": "select h.code,h.mentor,h.mentee,h.health,h.completed_sessions from pair_health h join matches m on m.id=h.id where m.programme_id=$1 order by h.code"
+      },
+      {
+        "title": "Outstanding development",
+        "sql": "select g.code,g.title,g.owner,g.due from goals g join matches m on m.id=g.match_id where m.programme_id=$1 and g.status='open' order by g.due"
+      }
     ]
   }
 ]

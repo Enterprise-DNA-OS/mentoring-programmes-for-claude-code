@@ -1,0 +1,32 @@
+{
+  "users": {
+    "id": "User ID",
+    "name": "Name",
+    "email": "Email",
+    "department": "Department"
+  },
+  "matches": {
+    "id": "Match ID",
+    "mentor": "Mentor ID",
+    "mentee": "Mentee ID",
+    "status": "Status",
+    "started": "Start Date",
+    "ended": "End Date"
+  },
+  "sessions": {
+    "id": "Session ID",
+    "match": "Match ID",
+    "day": "Date",
+    "status": "Status",
+    "minutes": "Minutes",
+    "topic": "Topic",
+    "feedback": "Feedback"
+  },
+  "match_status": {
+    "matched": "active",
+    "pending approval": "staged"
+  },
+  "session_status": {
+    "done": "completed"
+  }
+}
